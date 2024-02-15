@@ -1,26 +1,36 @@
 const initialState = {
     token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    loading: true,
+    isAuthenticated: !!localStorage.getItem('token') || false,
+    isLoading: false,
+    isrequesting: false,
     user: null
   };
   
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'USER_REQUEST':
+        return {
+            ...state,
+            isLoading: true,
+            isrequesting: true
+        };
         case 'USER_LOADED':
+        case 'AUTH_SUCCESS':
         return {
             ...state,
             isAuthenticated: true,
-            loading: false,
-            user: action.payload
+            isLoading: false,
+            user: action.payload,
+            isrequesting: false
         };
         case 'LOGIN_SUCCESS':
-        localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', action.payload.token);
         return {
             ...state,
             ...action.payload,
             isAuthenticated: true,
-            loading: false
+            isLoading: false,
+            isrequesting: false
         };
         case 'AUTH_ERROR':
         case 'LOGIN_FAIL':
@@ -30,8 +40,9 @@ const authReducer = (state = initialState, action) => {
             ...state,
             token: null,
             isAuthenticated: false,
-            loading: false,
-            user: null
+            isLoading: false,
+            user: null,
+            isrequesting: false
         };
         default:
         return state;

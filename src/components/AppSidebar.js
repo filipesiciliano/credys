@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   CCloseButton,
@@ -9,24 +9,24 @@ import {
   CSidebarHeader,
   CSidebarNav,
   CSidebarToggler,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
 
-import { AppSidebarNav } from './AppSidebarNav'
+import { AppSidebarNav } from './AppSidebarNav';
 
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
+import { logo } from 'src/assets/brand/logo';
+import { sygnet } from 'src/assets/brand/sygnet';
 
-import SimpleBar from 'simplebar-react'
-import 'simplebar-react/dist/simplebar.min.css'
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 
 // sidebar nav config
-import navigation from '../_nav'
+import navigation from '../_nav';
 
 const AppSidebar = () => {
-  const dispatch = useDispatch()
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const dispatch = useDispatch();
+  const unfoldable = useSelector((state) => state.sidebarUnfoldable);
+  const sidebarShow = useSelector((state) => state.sidebarShow);
 
   return (
     <CSidebar
@@ -36,7 +36,7 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch({ type: 'set', sidebarShow: visible })
+        dispatch({ type: 'set', sidebarShow: visible });
       }}
     >
       <CSidebarHeader className="border-bottom">
@@ -62,7 +62,7 @@ const AppSidebar = () => {
         />
       </CSidebarFooter>
     </CSidebar>
-  )
-}
+  );
+};
 
-export default React.memo(AppSidebar)
+export default React.memo(AppSidebar);

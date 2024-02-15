@@ -2,10 +2,7 @@ import { legacy_createStore as createStore, applyMiddleware, compose } from 'red
 import { thunk } from 'redux-thunk';
 import rootReducer from '../reducers';
 
-const initialState = {
-  sidebarShow: true,
-  theme: 'light',
-};
+const initialState = {};
 
 const middleware = [thunk];
 
