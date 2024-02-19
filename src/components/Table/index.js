@@ -3,6 +3,7 @@ import { CTable, CTableHead, CTableDataCell, CTableHeaderCell, CTableBody, CTabl
 import PropTypes from 'prop-types';
 
 export const Table = ({ columns = [], data = [], isLoading = false }) => {
+    console.log(data, isLoading);
     return (
         <>
             {isLoading ? (
@@ -48,6 +49,6 @@ Table.propTypes = {
             accessor: PropTypes.string.isRequired,
         })
     ).isRequired,
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object),
     isLoading: PropTypes.bool,
 };

@@ -16,12 +16,13 @@ const Companies = () => {
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(state => state.company.companies);
-
+  console.log(data);
   const columns = [
     { header: 'ID', accessor: 'id' },
-    { header: 'Nome', accessor: 'name' },
+    { header: 'Nome', accessor: 'company_name' },
     { header: 'CNPJ', accessor: 'cnpj' },
-    { header: 'Endereço', accessor: 'address' }
+    { header: 'Responsável Legal', accessor: 'legal_responsible' },
+    { header: 'Telefone Responsável', accessor: 'legal_responsible_phone' },
   ];
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const Companies = () => {
           </CCard>
         </CCol>
       </CRow>
-      <AddCompany isVisible={addCompanyModalVisible} setAddCompanyModalVisible={setAddCompanyModalVisible}/>
+      <AddCompany isVisible={addCompanyModalVisible} setModalVisible={setAddCompanyModalVisible}/>
     </>
   );
 };
