@@ -27,50 +27,44 @@ export const Table = ({
 
     return (
         <>
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : (
-                <>
-                    <div className='d-flex align-items-center'>
-                        <CFormSelect
-                            className='w-auto'
-                            label="Itens por página:"
-                            aria-label="Itens por página"
-                            value={limit} onChange={handleLimitsPerPage}
-                            options={INITIAL_VALUES.itemsPerPageOptions}
-                        />
-                    </div>
-                    <CTable>
-                        <CTableHead>
-                            <CTableRow>
-                                {columns.map((column, index) => (
-                                    <CTableHeaderCell key={index} scope="col">
-                                        {column.header}
-                                    </CTableHeaderCell>
+            <div className='d-flex align-items-center'>
+                <CFormSelect
+                    className='w-auto'
+                    label="Itens por página:"
+                    aria-label="Itens por página"
+                    value={limit} onChange={handleLimitsPerPage}
+                    options={INITIAL_VALUES.itemsPerPageOptions}
+                />
+            </div>
+            <CTable hover>
+                <CTableHead>
+                    <CTableRow>
+                        {columns.map((column, index) => (
+                            <CTableHeaderCell key={index} scope="col">
+                                {column.header}
+                            </CTableHeaderCell>
+                        ))}
+                    </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                    {data.length > 0 ? (
+                        data.map((item, rowIndex) => (
+                            <CTableRow key={rowIndex}>
+                                {columns.map((column, colIndex) => (
+                                    <CTableDataCell key={colIndex}>
+                                        {item[column.accessor]}
+                                    </CTableDataCell>
                                 ))}
                             </CTableRow>
-                        </CTableHead>
-                        <CTableBody>
-                            {data.length > 0 ? (
-                                data.map((item, rowIndex) => (
-                                    <CTableRow key={rowIndex}>
-                                        {columns.map((column, colIndex) => (
-                                            <CTableDataCell key={colIndex}>
-                                                {item[column.accessor]}
-                                            </CTableDataCell>
-                                        ))}
-                                    </CTableRow>
-                                ))
-                            ) : (
-                                <CTableRow>
-                                    <CTableDataCell colSpan={columns.length}>Nenhuma dado encontrado</CTableDataCell>
-                                </CTableRow>
-                            )}
-                        </CTableBody>
-                    </CTable>
-                    <Pagination paginationData={paginationData} paginate={handleSetPage} />
-                </>
-            )}
+                        ))
+                    ) : (
+                        <CTableRow>
+                            <CTableDataCell colSpan={columns.length}>Nenhuma dado encontrado</CTableDataCell>
+                        </CTableRow>
+                    )}  
+                </CTableBody>
+            </CTable>
+            <Pagination paginationData={paginationData} isLoading={isLoading} paginate={handleSetPage} />
         </>
     );
 };

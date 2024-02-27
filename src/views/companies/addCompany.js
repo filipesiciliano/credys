@@ -1,11 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import ModalForm from 'src/components/ModalForm';
-import { addCompany } from 'src/actions/companyActions';
 import PropTypes from 'prop-types';
 
-const AddCompany = ({isVisible, setModalVisible}) => {
-    const dispatch = useDispatch();
+const AddCompany = ({isVisible, handleSubmit, setModalVisible, isLoading}) => {
 
     const fields = {
         company_name: { name: 'Nome', required: true, value: ''},
@@ -14,25 +11,23 @@ const AddCompany = ({isVisible, setModalVisible}) => {
         legal_responsible_phone: { name: 'Telefone', required: false, value: '', mask: '(99) 99999-9999'},
     };
 
-    const handleSubmit = (formData) => {
-        dispatch(addCompany(formData));
-        setModalVisible(false);
-    };
-
     return (
         <ModalForm 
             fields={fields} 
             title='Nova Empresa' 
-            isVisible={isVisible} 
+            isVisible={isVisible}
             setModalVisible={setModalVisible}
             submitForm={handleSubmit}
+            isLoading={isLoading}
         />
     );
 };
 
 AddCompany.propTypes = {
     isVisible: PropTypes.bool.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     setModalVisible: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
 };
 
 export default AddCompany;

@@ -10,12 +10,20 @@ import {
     CFormTextarea,
     CForm, 
     CFormLabel, 
-    CFormFeedback 
+    CFormFeedback, 
+    CSpinner
 } from '@coreui/react';
 import InputMask from 'react-input-mask';
 import PropTypes from 'prop-types';
 
-const ModalForm = ({ fields, title, isVisible, setModalVisible, submitForm }) => {
+const ModalForm = ({ 
+    fields, 
+    title, 
+    isVisible, 
+    setModalVisible, 
+    submitForm, 
+    isLoading
+}) => {
     const [formData, setFormData] = useState(fields);
     const [errors, setErrors] = useState({});
 
@@ -58,7 +66,6 @@ const ModalForm = ({ fields, title, isVisible, setModalVisible, submitForm }) =>
         if (validateForm()) {
             const validData = parseDataToRequest(formData);
             submitForm(validData);
-            handleCloseModal();
         }
     };
 
@@ -133,7 +140,7 @@ const ModalForm = ({ fields, title, isVisible, setModalVisible, submitForm }) =>
                 <CButton color="secondary" onClick={handleCloseModal}>
                     Fechar
                 </CButton>
-                <CButton color="primary" onClick={handleSubmit}>Salvar</CButton>
+                <CButton color="primary" onClick={handleSubmit} disabled={isLoading}>{isLoading ? <CSpinner size='sm' /> : 'Salvar'}</CButton>
             </CModalFooter>
         </CModal>
     );
@@ -145,6 +152,7 @@ ModalForm.propTypes = {
     isVisible: PropTypes.bool.isRequired,
     setModalVisible: PropTypes.func.isRequired,
     submitForm: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
 };
 
 export default ModalForm;

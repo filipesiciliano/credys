@@ -2,7 +2,7 @@ import React from 'react';
 import { CPagination, CPaginationItem } from '@coreui/react';
 import PropTypes from 'prop-types';
 
-const Pagination = ({ paginationData: { total, limit, currentPage, totalPages, prevPage, nextPage }, paginate }) => {
+const Pagination = ({ paginationData: { total, limit, currentPage, totalPages, prevPage, nextPage }, paginate, isLoading }) => {
     const handlePageClick = (page) => () => paginate(page);
 
     const PaginationItem = ({ page, children, ...rest }) => (
@@ -26,13 +26,13 @@ const Pagination = ({ paginationData: { total, limit, currentPage, totalPages, p
     return (
         <>
             <CPagination aria-label="Navegação de página">
-                <PaginationItem page={currentPage - 1} aria-label="Anterior" disabled={!prevPage}>
+                <PaginationItem page={currentPage - 1} aria-label="Anterior" disabled={!prevPage || isLoading}>
                     &laquo;
                 </PaginationItem>
                 {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(page => (
-                    <PaginationItem key={page} page={page} />
+                    <PaginationItem key={page} page={page} disabled={isLoading} />
                 ))}
-                <PaginationItem page={currentPage + 1} aria-label="Próximo" disabled={!nextPage}>
+                <PaginationItem page={currentPage + 1} aria-label="Próximo" disabled={!nextPage || isLoading}>
                     &raquo;
                 </PaginationItem>
             </CPagination>
@@ -55,6 +55,7 @@ Pagination.propTypes = {
         nextPage: PropTypes.number,
     }),
     paginate: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
 };
 
 export default Pagination;
