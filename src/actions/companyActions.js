@@ -1,9 +1,9 @@
 import api from '../config/server';
 
-const listCompanies = () => async dispatch => {
+const listCompanies = (page, limit) => async dispatch => {
     dispatch({ type: 'COMPANY_REQUEST' });
     try {
-        const res = await api.get('/api/companies');
+        const res = await api.get('/api/companies', { params: { page, limit } });
         dispatch({
             type: 'LIST_COMPANY_SUCCESS',
             payload: res.data

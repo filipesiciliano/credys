@@ -6,11 +6,13 @@ import {
     CModalFooter, 
     CModalHeader, 
     CModalTitle, 
-    CFormInput, 
+    CFormInput,
+    CFormTextarea,
     CForm, 
     CFormLabel, 
     CFormFeedback 
 } from '@coreui/react';
+import InputMask from 'react-input-mask';
 import PropTypes from 'prop-types';
 
 const ModalForm = ({ fields, title, isVisible, setModalVisible, submitForm }) => {
@@ -66,6 +68,7 @@ const ModalForm = ({ fields, title, isVisible, setModalVisible, submitForm }) =>
         setErrors({});
     };
 
+
     return (
         <CModal visible={isVisible} onClose={handleCloseModal}>
             <CModalHeader>
@@ -75,19 +78,54 @@ const ModalForm = ({ fields, title, isVisible, setModalVisible, submitForm }) =>
                 <CForm onSubmit={handleSubmit}>
                     {Object.keys(fields).map(field => (
                         <div className="mb-3" key={field}>
-                            <CFormLabel htmlFor={field}>{fields[field].name}</CFormLabel>
-                            <CFormInput
-                                type="text"
-                                id={field}
-                                name={fields[field].name}
-                                value={formData[field].value}
-                                onChange={handleChange}
-                                invalid={errors[field] ? true : false}
-                            />
-                            <CFormFeedback invalid>
-                                {errors[field]}
-                            </CFormFeedback>
-                        </div>
+                        <CFormLabel htmlFor={field}>{fields[field].name}</CFormLabel>
+                        {(fields[field].type === 'textarea') ? (
+                                <>
+                                    <CFormTextarea
+                                        id={field}
+                                        name={field}
+                                        value={formData[field].value}
+                                        onChange={handleChange}
+                                        invalid={errors[field] ? true : false}
+                                    />
+                                    <CFormFeedback invalid>
+                                        {errors[field]}
+                                    </CFormFeedback>
+                                </>
+                        ) : (
+                            <>
+                            {fields[field].mask ? (
+                                    <InputMask
+                                        mask={fields[field].mask}
+                                        value={formData[field].value}
+                                        onChange={handleChange}
+                                        disabled={false}
+                                        maskChar=" "
+                                    >
+                                        {() => <CFormInput
+                                            type="text"
+                                            id={field}
+                                            name={field}
+                                            invalid={errors[field] ? true : false}
+                                        />}
+                                    </InputMask>
+                                ) : (
+                                    <CFormInput
+                                        type="text"
+                                        id={field}
+                                        name={field}
+                                        value={formData[field].value}
+                                        onChange={handleChange}
+                                        invalid={errors[field] ? true : false}
+                                    />
+                                )}
+                            </>
+                        )
+                    }
+                        <CFormFeedback invalid>
+                            {errors[field]}
+                        </CFormFeedback>
+                    </div>
                     ))}
                 </CForm>
             </CModalBody>

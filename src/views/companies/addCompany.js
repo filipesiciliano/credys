@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 const AddCompany = ({isVisible, setModalVisible}) => {
     const dispatch = useDispatch();
 
-    const columns = {
+    const fields = {
         company_name: { name: 'Nome', required: true, value: ''},
-        cnpj: { name: 'CNPJ', required: true, value: ''},
+        cnpj: { name: 'CNPJ', required: true, value: '', mask: '99.999.999/9999-99'},
         legal_responsible: { name: 'Responsável Legal', required: false, value: ''},
-        legal_responsible_phone: { name: 'Telefone', required: false, value: ''},
+        legal_responsible_phone: { name: 'Telefone', required: false, value: '', mask: '(99) 99999-9999'},
     };
 
     const handleSubmit = (formData) => {
@@ -21,7 +21,7 @@ const AddCompany = ({isVisible, setModalVisible}) => {
 
     return (
         <ModalForm 
-            fields={columns} 
+            fields={fields} 
             title='Nova Empresa' 
             isVisible={isVisible} 
             setModalVisible={setModalVisible}

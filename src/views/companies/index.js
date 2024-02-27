@@ -16,7 +16,6 @@ const Companies = () => {
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(state => state.company.companies);
-  console.log(data);
   const columns = [
     { header: 'ID', accessor: 'id' },
     { header: 'Nome', accessor: 'company_name' },
@@ -25,9 +24,13 @@ const Companies = () => {
     { header: 'Telefone Responsável', accessor: 'legal_responsible_phone' },
   ];
 
+  const handlePagination = (page, limit) => {
+    dispatch(listCompanies(page, limit));
+  };
+
   useEffect(() => {
     dispatch(listCompanies());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -41,7 +44,7 @@ const Companies = () => {
               </CButton>
             </CCardHeader>
             <CCardBody>
-              <Table columns={columns} data={data}/>
+              <Table columns={columns} data={data.data} meta={data.meta} paginate={handlePagination}/>
             </CCardBody>
           </CCard>
         </CCol>
